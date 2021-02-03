@@ -20,7 +20,7 @@ Route::resource('admin/home', HomeController::class);
 Route::resource('posyandu01', ControllerPosyandu01::class);
 Route::resource('posyandu09', ControllerPosyandu09::class);
 Route::get('/halamaninput', [App\Http\Controllers\InputController::class, 'index'])->name('halamaninput');
-Route::post('/halamaninput', [App\Http\Controllers\InputController::class, 'store'])->name('halamaninput.store');
+Route::post('/halamaninput/store', [App\Http\Controllers\InputController::class, 'store'])->name('halamaninput.store');
 Route::get('/halamaninput/create', [App\Http\Controllers\InputController::class, 'create']);
 Route::get('/halamaninput/{$id}', [App\Http\Controllers\InputController::class, 'show']);
 Route::put('/halamaninput/{$id}', [App\Http\Controllers\InputController::class, 'update']);

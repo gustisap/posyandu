@@ -73,14 +73,13 @@
         <h4 class="modal-title" id="customerCrudModal"></h4>
       </div>
       <div class="modal-body">
-        <form name="custForm" action="{{ route('admin.home.store') }}" method="POST">
-        <input type="hidden" name="cust_id" id="cust_id" >
+        <form name="custForm" action="{{ route('halamaninput.store') }}" method="POST">
         @csrf
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
               <strong>Nama:</strong>
-              <input type="text" name="name" id="name" class="form-control" >
+              <input type="text" name="nama" id="name" class="form-control" >
             </div>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-12">
@@ -137,9 +136,9 @@
   </tr>
 </thead>
   <tbody>
-    @foreach($pos as $row)
+    @foreach($posyandu as $row)
   <tr>
-    <td>{{$row->id}}</td>
+    <td>{{$loop->iteration}}</td>
     <td>{{$row->nama}}</td>
     <td>{{$row->jenis_kelamin}}</td>
     <td>{{$row->berat_badan}}</td>
@@ -218,40 +217,39 @@
     </div>
   </div>
   @endforeach
-  
-  @foreach($pos as $row)
+  <!-- @foreach($posyandu as $row)
   <?php
-  if($row->id9 <= 50){
-    $a=100+$row->id9;
-  echo"<tr>
-  <td>$a</td>
-  <td>{$row->nama9}</td>
-  <td>{$row->jk9}</td>
-  <td>{$row->bb9}</td>
-  <td>{$row->tb9}</td>
-  <td>{$row->usia9}</td>
-  <td>{$row->sg9}</td>
-  <td>
-  <form action='{{ route('admin.home.destroy',$row->id) }}' method='POST'>
-  <a href='javascript:void(0)' class='btn btn-success' id='edit-customer' data-toggle='modal' data-id='{{ $row->id }}'>Edit </a>
-  <meta name='csrf-token' content='{{ csrf_token() }}'>";
+//   if($row->id9 <= 50){
+//     $a=100+$row->id9;
+//   echo"<tr>
+//   <td>$a</td>
+//   <td>{$row->nama9}</td>
+//   <td>{$row->jk9}</td>
+//   <td>{$row->bb9}</td>
+//   <td>{$row->tb9}</td>
+//   <td>{$row->usia9}</td>
+//   <td>{$row->sg9}</td>
+//   <td>
+//   <form action='{{ route('admin.home.destroy',$row->id) }}' method='POST'>
+//   <a href='javascript:void(0)' class='btn btn-success' id='edit-customer' data-toggle='modal' data-id='{{ $row->id }}'>Edit </a>
+//   <meta name='csrf-token' content='{{ csrf_token() }}'>";
   
-  if($row->is_admin == "1")
-  echo" ";
-  else{
-  echo"<a id='delete-customer' data-id='$row->id' class='btn btn-danger delete-user'>Delete</a></td>";
-  };
-  echo"
-  </form>
-  </td>
-</tr>
-";
-  }
-  else
-  echo" ";
+//   if($row->is_admin == "1")
+//   echo" ";
+//   else{
+//   echo"<a id='delete-customer' data-id='$row->id' class='btn btn-danger delete-user'>Delete</a></td>";
+//   };
+//   echo"
+//   </form>
+//   </td>
+// </tr>
+// ";
+//   }
+//   else
+//   echo" ";
   ?>
 </div>
-    @endforeach
+    @endforeach -->
 </tbody>
 </table>
 <a class="btn btn-success mb-3" href="halamanhasil">Olah Data</a>

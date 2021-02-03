@@ -9,6 +9,7 @@ class ModelPosyandu01 extends Model
 {
     use HasFactory;
     protected $table = 'posyandu1';
+    public $timestamps = false;
     protected $fillable = [
         'nama',
         'jenis_kelamin',

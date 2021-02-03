@@ -3,17 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\ModelInput;
+use App\Models\ModelPosyandu01;
+use App\Models\ModelPosyandu09;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Validator;
+use Illuminate\Validation\Rule;
 
 class InputController extends Controller
 {
     public function index()
     {
-        $pos = ModelInput::join('posyandu9', 'posyandu9.id', '=', 'posyandu1.id')
-              ->get(['posyandu1.*', 'posyandu9.id as id9', 'posyandu9.nama as nama9', 'posyandu9.jenis_kelamin as jk9', 'posyandu9.berat_badan as bb9', 'posyandu9.tinggi_badan as tb9', 'posyandu9.usia as usia9', 'posyandu9.status_gizi as sg9']);
-              
-        return view('halamaninput', compact('pos'));
+		$posyandu = collect();
+		$pos1 = ModelPosyandu01::all();
+		$pos9 = ModelPosyandu09::all();
+
+		foreach ($pos1 as $data){
+			$posyandu->push($data);
+		}
+		foreach ($pos9 as $data){
+			$posyandu->push($data);
+		}
+        return view('halamaninput', compact('posyandu'));
     }
     
     public function create()
@@ -30,23 +41,24 @@ class InputController extends Controller
 
 	public function store(Request $request)
 	{
-
-		$r=$request->validate([
-		'nama' => 'required',
-		'jenis_kelamin' => 'required',
-        'berat_badan' => 'required',
-        'tinggi_badan' => 'required',
-        'usia' => 'required',
-        'status_gizi' => 'required'
-		]);
-
-		$id = $request->id;
-		ModelInput::updateOrCreate(['id' => $id],['nama' => $request->nama, 'jenis_kelamin' => $request->jenis_kelamin,'berat_badan'=>$request->berat_badan,'tinggi_badan'=>$request->tinggi_badan,'usia'=>$request->usia,'status_gizi'=>$request->status_gizi]);
-		if(empty($request->id))
-			$msg = 'Customer entry created successfully.';
-		else
-			$msg = 'Customer data is updated successfully';
-		return redirect()->route('halamaninput')->with('success',$msg);
+		$requestData = $request->only(['nama', 'jenis_kelamin', 'berat_badan', 'tinggi_badan', 'usia', 'status_gizi']);
+		
+		$validator = Validator::make($requestData, [
+			'nama' => 'required|string',
+			'jenis_kelamin' => 'required|string',
+			'berat_badan' => 'required|integer',
+			'tinggi_badan' => 'required|integer',
+			'usia' => 'required|integer',
+			'status_gizi' => 'required|string'
+        ]);
+        if ($validator->passes()) {
+			$storeDataBalita = ModelInput::create($requestData);
+			if ($storeDataBalita) {
+				return redirect()->route('halamaninput')->with('success', "Berhasil menambah data balita");
+			}
+		}else{
+			return redirect()->route('halamaninput')->with('success', "Gagal menambah data balita");
+		}
 	}
 
 	/**
